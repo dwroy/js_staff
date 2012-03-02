@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+        <title>Tank</title>
+        <link href="main.css" type="text/css" rel="stylesheet" />
+        <style>
+        </style>
+    </head>
+    <body>
+        <span id="fps-show"></span>
+        Origin x:<input id="origin-x" value="1"/>
+        Origin y:<input id="origin-y" value="1"/>
+        Target x:<input id="target-x" value="79"/>
+        Target y:<input id="target-y" value="43"/>
+        <button id="button">Search</button>
+        Time:<span id="time"></span>
+        <div id="canvas-frame"></div> 
+        <script type="text/javascript" src="core.js"></script>
+        <script type="text/javascript" src="images.js"></script>
+        <script type="text/javascript" src="astar.bak.js"></script>
+        <script type="text/javascript" >
+          $('button').addEventListener('click', function(){
+            test($('origin-x').value , $('origin-y').value , $('target-x').value , $('target-y').value );
+          }, false)
+        </script>
+    </body>
+</html>

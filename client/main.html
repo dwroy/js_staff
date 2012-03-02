@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+        <title>Tank</title>
+        <style>
+            body {
+                margin: 0px;
+                padding: 0px;
+            }
+
+            #canvas-frame {
+                width: 920px;
+                height: 620px;
+                padding: 0px;
+                display: block;
+                margin: 10px auto 0px;
+                background-color: black;
+            }
+
+            #fps-show {
+                position: absolute;
+
+            }
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript" src="config.js"></script>
+        <script type="text/javascript" src="websocket.js"></script>
+        <script type="text/javascript" src="application.js"></script>
+        <script type="text/javascript" src="aoto/scene.js"></script>
+        <script type="text/javascript" src="aoto/ui.js"></script>
+        <script type="text/javascript" src="aoto/user.js"></script>
+        <script type="text/javascript" src="canvas.js"></script>
+        <script type="text/javascript" src="images.js"></script>
+        <script type="text/javascript" src="main.js"></script>
+        <div id="user-name-input" style="display:none;">
+        Name:<input type="text" id="name" />
+        Key:<input type="text" id="key" />
+        <button id="start-button">Start</button>Please enter your name and a key for authentication
+        </div>
+    </body>
+</html>
