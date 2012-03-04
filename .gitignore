@@ -1,0 +1,15 @@
+log/*
+tmp/*
+.DS_Store
+*.tmproj
+Thumbs.db
+._*
+nbproject/
+.project
+tmtags
+*.swp
+/.settings/
+.gitkeep
+.idea/*
+config/database.yml
+public/uploads/*
