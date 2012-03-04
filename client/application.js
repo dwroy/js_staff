@@ -17,7 +17,7 @@ Application.prototype = {
                     var data = JSON.parse( event.data ) ,
                         route = data[0].split( '.' ) ,
                         c = new Controllers[ route[0] ]( data[1] , event.timeStamp , this );
-console.log( route );
+
                     if( c[ route[1] ] instanceof Function )
                         c[ route[1] ]( data[1] );
                     else

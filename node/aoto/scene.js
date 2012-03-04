@@ -1,22 +1,22 @@
-var Scene , c ,
+var Scene , SceneController ,
     stage = [] ,
     Scene = require( './lib/scene.js' );
     util = require( 'util' ) ,
     Controller = require( '../controller.js' );
 
-c = function( data , time , connection ){
+SceneController = function( data , time , connection ){
     Controller.call( this , data , time , connection );
 };
 
-util.inherits( c , Controller );
+util.inherits( SceneController , Controller );
 
-c.init = function( data , time , connection ){
-    return new c( data , time , connection );
+SceneController.init = function( data , time , connection ){
+    return new SceneController( data , time , connection );
 };
 
-module.exports = c;
+module.exports = SceneController;
 
-c.prototype.create = function( data ){
+SceneController.prototype.create = function( data ){
     var user = this.getUser();
     var scene = new Scene;
     scene.ownerId = user.id;
@@ -26,13 +26,17 @@ c.prototype.create = function( data ){
     this.send( 'scene.enter' , scene.id );
 };
 
-c.prototype.get = function( data ){
+SceneController.prototype.get = function( data ){
     var id = data.id ,
         scene = Scene.get( id );
 
     this.send( 'scene.info' , { id: scene.id , name: scene.name , openTime: scene.openTime } );
 };
 
-c.prototype.enter = function( data ){
+SceneController.prototype.enter = function( data ){
 
+};
+
+SceneController.prototype.data = function( data ){
+    this.send( 'scene.data' , Scene.get( data ) );
 };

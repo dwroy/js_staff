@@ -1,42 +1,50 @@
 var Scene , 
-    maxScenes = 100 ,
-    pool = new Array( maxScenes );
+    Toy = require( './toy.js' ) ,
+    MaxCount = 100 ,
+    Bag = new Array( MaxCount );
 
 Scene = function(){
     var id = 0 ,
-        objects = [] ,
-        info = [];
+        bag = [] ,
+        data = [];
 
-    while( pool[id] instanceof Scene )
+    while( Bag[id] instanceof Scene )
         id++;
 
-    if( id >= maxScenes )
+    if( id >= MaxCount )
         throw new Error( 'reach max scenes number' );
 
-    pool[id] = this;
+    Bag[id] = this;
 
-    this._interval = setInterval( function(){
-        for( var i = 0; i < objects.length; i++ )
-            info.push( objects[i].info() );
+    this._intervalId = setInterval( function(){
+        var i = 0;
+        data.length = 0;
+
+        for( ; i < bag.length; i++ )
+            data.push( bag[i].getData() );
     } , 25 );
 
+    this.openTime = new Date().getTime();
     this.id = id;
-    this.objects = objects;
-    this.info = info;
+    this.bag = bag;
+    this.data = data;
+    this._state = Scene.STATE_OPEN;
 };
 
 module.exports = Scene;
+Scene.STATE_OPEN = 0;
+Scene.STATE_CLOSE = 1;
 
 Scene.get = function( id ){
-    return pool[id];
+    return Bag[id];
 };
 
 Scene.getIds = function(){
     var i = 0 ,
         rooms = [];
 
-    for( ; i < pool.length; i++ )
-        if( pool[i] instanceof Scene )
+    for( ; i < Bag.length; i++ )
+        if( Bag[i] instanceof Scene )
             rooms.push( i );
 
     return rooms;
@@ -46,8 +54,27 @@ Scene.prototype = {
 
     constructor: Scene,
 
-    add: function( object ){
-        object.id = this.objects.length;
-        this.objects.push( object );
+    add: function( toy ){
+        if( toy instanceof Toy ){
+            toy.scene = this;
+            this.bag.push( toy );
+        }
+    },
+
+    isOpen: function(){
+        return this._state === Scene.STATE_OPEN;
+    },
+
+    isClose: function(){
+        return this._state === Scene.STATE_CLOSE;
+    },
+
+    close: function(){
+        clearInterval( this._intervalId );
+        while( ( toy = this.bag.pop() ) && toy.scene === this )
+            toy.scene = null;
+
+        this._state = Scene.STATE_CLOSE;
     }
 };
+

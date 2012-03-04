@@ -1,31 +1,51 @@
 var User ,
-    pool = [] ,
-    crypto = require( 'crypto' );
+    Bag = [] ,
+    NameIndexBag = {} ,
+    Crypto = require( 'crypto' );
 
-User = function( name , key ){
+User = function( name , password ){
+    if( !/^[\w]{1,16}$/.test( name ) )
+        throw new Error( 'Invalid name' );
 
-    this.id = pool.length;
+    if( name in NameIndexBag )
+        throw new Error( 'User exist' );
+
+    this.id = Bag.length;
     this.name = name;
-    this.secret = crypto.createHash( 'sha1' )
-        .update( name + ':' + key )
-        .digest();
+    this.salt = name + Math.random();
+    this.password = this.hashPassword( password , this.salt );
+    Bag.push( this );
+    NameIndexBag[ name ] = this;
+};
 
-    pool.push( this );
+User.getByName = function( name ){
+    return NameIndexBag[ name ];
+};
+
+User.get = function( id ){
+    return Bag[ id ];
 };
 
 User.prototype = {
 
     constructor: User,
 
-    check: function( key ){
-        return this.secret === crypto.createHash( 'sha1' )
-            .update( name + ':' + key )
-            .digest();
-    }
-};
+    checkPassword: function( password ){
+        return this.password === this.hashPassword( password , this.salt );
+    },
 
-User.get = function( id ){
-    return pool[ id ];
+    hashPassword: function( password , salt ){
+        return Crypto.createHash( 'sha1' )
+        .update( salt + ':' + password )
+        .digest();
+    },
+
+    getData: function(){
+        return {
+            id: this.id,
+            name: this.name
+        };
+    }
 };
 
 module.exports = User;

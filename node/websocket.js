@@ -1,21 +1,23 @@
 var WebSocket , Connection , 
-    util = require( 'util' ) ,
-    emitter = require( 'events' ).EventEmitter ,
-    crypto = require('crypto') ,
-    http = require( 'http' ) ,
-    keySuffix = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
+    Util = require( 'util' ) ,
+    Emitter = require( 'events' ).EventEmitter ,
+    Crypto = require('crypto') ,
+    Http = require( 'http' ) ,
+    KeySuffix = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
 
 Connection = function( request , time , socket ){
-    emitter.call( this );
+    Emitter.call( this );
     
     this.headers = request.headers;
     this.method = request.method;
     this.url = request.url;
     this.time = time;
+    this.isOpen = true;
+    this.isClose = false;
     this._socket = socket;
 };
 
-util.inherits( Connection , emitter );
+Util.inherits( Connection , Emitter );
 
 Connection.prototype.send = function( data ){
     var buffer , di ,
@@ -66,6 +68,10 @@ Connection.prototype.pong = function(){
     this._socket.write( buffer );
 };
 
+Connection.prototype.writable = function(){
+    return this._socket.writable;
+};
+
 Connection.prototype.close = function(){
     this.emit( 'close' );
     this._socket.end();
@@ -73,15 +79,15 @@ Connection.prototype.close = function(){
 
 WebSocket = function(){
     var me = this ,
-        server = new http.Server;
+        server = new Http.Server;
 
-    emitter.call( this );
+    Emitter.call( this );
 
     server.on( 'upgrade' , function( request , socket , head ){
         var response , connection ,
             connectTime = new Date().getTime() ,
-            key = crypto.createHash( 'sha1' )
-                .update( request.headers['sec-websocket-key'] + keySuffix )
+            key = Crypto.createHash( 'sha1' )
+                .update( request.headers['sec-websocket-key'] + KeySuffix )
                 .digest( 'base64' );
 
         response = 'HTTP/1.1 101 Switching Protocols\r\n' +
@@ -147,12 +153,16 @@ WebSocket = function(){
                 }
             }while( fin === 0 );
         });
+
+        socket.on( 'close' , function( e ){
+            connection.emit( 'close' , e );
+        });
     });
 
     this._server = server;
 };
 
-util.inherits( WebSocket , emitter );
+Util.inherits( WebSocket , Emitter );
 
 WebSocket.prototype.listen = function( port , host ){
     this._server.listen( port , host );

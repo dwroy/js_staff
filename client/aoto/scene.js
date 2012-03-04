@@ -37,8 +37,7 @@
     };
 
     c.prototype.sync = function( data ){
-        scene.push( data );
-        camera.shoot( data );
+        Data = data;
     };
 
     c.prototype.add = function( data ){

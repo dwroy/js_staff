@@ -1,7 +1,7 @@
-var main ,
-    util = require( 'util' );
+var Main ,
+    Util = require( 'util' );
 
-main = function( config ){
+Main = function( config ){
     var server = require( './websocket.js' ).init() ,
         modules = config.modules;
 
@@ -13,7 +13,7 @@ main = function( config ){
 
 console.log( connection.url );
             connection.on( 'data' , function( buffer , time ){
-                //try{
+                try{
                     var data = JSON.parse( buffer.toString( 'utf8' , 0 , buffer.length ) ) ,
                         route = data[0].split( '.' ) ,
                         controller = require( '.' + this.url + '/' + route[0] + '.js' )
@@ -24,9 +24,9 @@ console.log( route );
                     else
                         throw new Error( 'Action not found' );
 
-                //}catch( e ){
-                 //   util.log( e );
-                //}
+                }catch( e ){
+                    Util.log( e );
+                }
             });
 
             connection.on( 'pong' , function( time ){
@@ -43,5 +43,4 @@ console.log( route );
     } , 5000 );
 };
 
-main.init = main;
-module.exports = main;
+module.exports = Main;
