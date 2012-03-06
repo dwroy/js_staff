@@ -1,9 +1,0 @@
-{
-    "name": "Tesla",
-    "host": "localhost",
-    "port": "1792",
-    "pingTime": 20000,
-    "modules": {
-        "/aoto": 1
-    }
-}
