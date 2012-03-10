@@ -28,9 +28,10 @@ images.on( 'load', function( name ){
 images.on( 'complete', function(){
     tank = new Animation( images.get( 5 ) , 50  , 50  , 1 );
 
+
     camera.on( 'mousedown' , function(){
         var mouse = this.getMouse();
-        tank.cancleActions();
+        tank.cancleAction();
         tank.addAction( 'move' , 0.5 , mouse.x , mouse.y );
     });
 
@@ -38,8 +39,7 @@ images.on( 'complete', function(){
 });
 
 function test(){
-    for( i = 0; i < 200000; i++)
-    { 
+    for( i = 0; i < 200000; i++){ 
         ball = new O( 0 , 0 , i%2 , images.get( 5 ) );
         scene.add( ball );
     }
