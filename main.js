@@ -15,7 +15,6 @@ var span = document.getElementById( 'fps-show' );
 Frame.loop = function(){
     span.textContent = this.fps + 'fps' ;
 
-
     scene.add( tank );
     scene.perform();
     camera.shoot( scene );
@@ -27,12 +26,17 @@ images.on( 'load', function( name ){
 
 images.on( 'complete', function(){
     tank = new Animation( images.get( 5 ) , 50  , 50  , 1 );
-
+    move = new Move( tank , 0.3 );
 
     camera.on( 'mousedown' , function(){
         var mouse = this.getMouse();
-        tank.cancleAction();
-        tank.addAction( 'move' , 0.5 , mouse.x , mouse.y );
+        move.setDestination( mouse.x , mouse.y );
+        move.start();
+    });
+
+    camera.on( 'mouseup' , function(){
+        var mouse = this.getMouse();
+        move.stop();
     });
 
     Frame.start();
