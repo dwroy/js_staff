@@ -13,9 +13,21 @@ var span = document.getElementById( 'fps-show' );
 
 
 Frame.loop = function(){
+
     span.textContent = this.fps + 'fps' ;
 
-    scene.add( tank );
+    var mouse = camera.getMouse();
+
+    tank1.lookAt( mouse.x , mouse.y );
+
+    if( mouse.state === Camera.MOUSE_STATE_DOWN ){
+        tank.lookAt( mouse.x , mouse.y );
+    }
+
+
+    //scene.add( tank );
+    scene.add( tank1 );
+    scene.add( tank1.bomb );
     scene.perform();
     camera.shoot( scene );
 };
@@ -27,16 +39,23 @@ images.on( 'load', function( name ){
 images.on( 'complete', function(){
     tank = new Animation( images.get( 5 ) , 50  , 50  , 1 );
     move = new Move( tank , 0.3 );
+    f = new Forward( tank , 0.4 );
+
+    tank1 = new Tank( images.get( 5 ) );
+    m = new Forward( tank1 , 0.2 );
 
     camera.on( 'mousedown' , function(){
-        var mouse = this.getMouse();
-        move.setDestination( mouse.x , mouse.y );
-        move.start();
+        var mouse = camera.getMouse();
+        f.start();
+    });
+
+    camera.on( 'click' , function(){
+        tank1.fire();
     });
 
     camera.on( 'mouseup' , function(){
         var mouse = this.getMouse();
-        move.stop();
+        f.stop();
     });
 
     Frame.start();
