@@ -50,22 +50,3 @@ Forward:
   function:
     start: []
     stop:  []
-
-Bomb:
-  property:
-    bomb:        Animation
-    fly:         Forward
-  function:
-    attach: [ Scene ]
-
-Chamber:
-  parent: Fx
-  property:
-    bag: array
-    size: integer
-    bomb: Bomb
-    loadTime: integer
-    _lastLoadTime: integer
-
-  function:
-    init: []
