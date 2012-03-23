@@ -5,7 +5,7 @@
 var div = document.createElement( 'div' );
 div.className = 'canvas-box';
 var scene = new Scene;
-var camera = new Camera( 0 , 0 , 920 , 620 , 3 , document.getElementById( 'canvas-frame' ) );
+var camera = new Camera( 0 , 0 , 640 , 960 , 3 , document.getElementById( 'canvas-frame' ) );
 var span = document.getElementById( 'fps-show' );
 var bombs = [];
 
@@ -14,16 +14,22 @@ images.on( 'load', function( name ){
 });
 
 images.on( 'complete', function(){
+  
+    tank = new Tank( images.get( 5 ) , 0.5 );
+    tank.mount( new Cannon( Bomb , images.get( 6 ) , 0.5 , 500 , 3 , 1000  ) );
 
-    chamber = new Chamber( Bomb , images.get( 6 ) , 1.2 , 500 , 100 );
-    chamber.position = new Point( 200 , 200 , 1 );
-    chamber.rotation = new Rotation;
-
-    camera.on( 'click' , function(){
+    camera.on( 'mousedown' , function(){
         var mouse = camera.getMouse();
+        tank.animation.lookAt( mouse.x , mouse.y );
+        tank.start();
+    });
 
+    camera.on( 'mouseup' , function(){
+        tank.stop();
+    });
 
-        chamber.start();
+    camera.on( 'keydown' , function(){
+        tank.cannon.fire();
     });
     
     Frame.start();
@@ -31,11 +37,7 @@ images.on( 'complete', function(){
 
 Frame.onloop = function(){
     span.textContent = this.fps;
-
-    for( var i = 0; i < bombs.length; i++ ){
-        bombs[i].attach( scene );
-    }
-
+    tank.attach( scene );
     scene.perform();
     camera.shoot( scene );
 };
@@ -50,5 +52,5 @@ function test(){
     camera.shoot( scene );
     var end = new Date().getTime();
 
-    console.log( end -start );
+    console.log( end - start );
 }
