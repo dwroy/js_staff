@@ -15,13 +15,12 @@ images.on( 'load', function( name ){
 
 images.on( 'complete', function(){
   
-    tank = new Tank( images.get( 5 ) , 0.5 );
-    cannon = new Cannon( Bomb , images.get( 6 ) , 0.5 , 500 , 3 , 1000  );
+    tank = new Tank( images.get( 5 ) , 0.2 );
+    cannon = new Cannon( Bomb , images.get( 6 ) , 0.9 , 500 , 3 , 1000  );
     tank.mount( cannon );
 
     camera.on( 'mousedown' , function(){
         var mouse = camera.getMouse();
-        tank.animation.lookAt( mouse.x , mouse.y );
         tank.start();
     });
 
@@ -37,8 +36,14 @@ images.on( 'complete', function(){
 });
 
 Frame.onloop = function(){
+    var mouse = camera.getMouse();
     span.textContent = this.fps;
     tank.attach( scene );
+
+    if( mouse.state === Camera.MOUSE_STATE_DOWN ){
+        tank.animation.lookAt( mouse.x , mouse.y );
+    }
+
     scene.perform();
     camera.shoot( scene );
 };
