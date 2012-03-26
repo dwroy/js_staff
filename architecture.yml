@@ -50,3 +50,10 @@ Forward:
   function:
     start: []
     stop:  []
+
+
+Scene:
+  property:
+    filmFx:
+      -[ ]
+      -[ ]

@@ -16,11 +16,10 @@ images.on( 'load', function( name ){
 images.on( 'complete', function(){
   
     tank = new Tank( images.get( 5 ) , 0.2 );
-    cannon = new Cannon( Bomb , images.get( 6 ) , 0.9 , 500 , 3 , 1000  );
+    cannon = new Cannon( Bomb , images.get( 6 ) , 0.5 , 500 , 5 , 1000  );
     tank.mount( cannon );
 
     camera.on( 'mousedown' , function(){
-        var mouse = camera.getMouse();
         tank.start();
     });
 
