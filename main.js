@@ -5,7 +5,7 @@
 var div = document.createElement( 'div' );
 div.className = 'canvas-box';
 var scene = new Scene;
-var camera = new Camera( 0 , 0 , 640 , 960 , 3 , document.getElementById( 'canvas-frame' ) );
+var camera = new Camera( 0 , 0 , 960 , 640 , 3 , document.getElementById( 'canvas-frame' ) );
 var span = document.getElementById( 'fps-show' );
 var bombs = [];
 
@@ -16,7 +16,8 @@ images.on( 'load', function( name ){
 images.on( 'complete', function(){
   
     tank = new Tank( images.get( 5 ) , 0.5 );
-    tank.mount( new Cannon( Bomb , images.get( 6 ) , 0.5 , 500 , 3 , 1000  ) );
+    cannon = new Cannon( Bomb , images.get( 6 ) , 0.5 , 500 , 3 , 1000  );
+    tank.mount( cannon );
 
     camera.on( 'mousedown' , function(){
         var mouse = camera.getMouse();
