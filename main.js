@@ -19,6 +19,8 @@ images.on( 'complete', function(){
     cannon = new Cannon( Bomb , images.get( 6 ) , 0.5 , 500 , 5 , 1000  );
     tank.mount( cannon );
 
+    target = new Animation( images.get( 1 ) , 400 , 200 );
+
     camera.on( 'mousedown' , function(){
         tank.start();
     });
@@ -37,12 +39,13 @@ images.on( 'complete', function(){
 Frame.onloop = function(){
     var mouse = camera.getMouse();
     span.textContent = this.fps;
-    tank.attach( scene );
 
     if( mouse.state === Camera.MOUSE_STATE_DOWN ){
         tank.animation.lookAt( mouse.x , mouse.y );
     }
 
+    tank.attach( scene );
+    scene.add( target );
     scene.perform();
     camera.shoot( scene );
 };
