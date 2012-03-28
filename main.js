@@ -2,31 +2,44 @@
  * @author Roy
  */
 
-var div = document.createElement( 'div' );
-div.className = 'canvas-box';
-var scene = new Scene;
-var camera = new Camera( 0 , 0 , 960 , 640 , 3 , document.getElementById( 'canvas-frame' ) );
-var span = document.getElementById( 'fps-show' );
-var bombs = [];
-
 images.on( 'load', function( name ){
     console.log( name  );
 });
 
 images.on( 'complete', function(){
-  
-    tank = new Tank( images.get( 5 ) , 0.2 );
-    cannon = new Cannon( Bomb , images.get( 6 ) , 0.5 , 500 , 5 , 1000  );
+    var div = document.createElement( 'div' );
+    div.className = 'canvas-box';
+    var scene = new Scene;
+    var camera = new Camera( 0 , 0 , 960 , 640 , 3 , document.getElementById( 'canvas-frame' ) );
+    var span = document.getElementById( 'fps-show' );
+    var npc = [
+        new Npc( new Animation( images.get( 1 ) , 100 , 150 ) , 3000 ) ,
+        new Npc( new Animation( images.get( 1 ) , 200 , 50  ) , 4000 ) ,
+        new Npc( new Animation( images.get( 1 ) , 300 , 300 ) , 1000 ) ,
+        new Npc( new Animation( images.get( 1 ) , 400 , 100 ) , 2000 ) ,
+        new Npc( new Animation( images.get( 1 ) , 700 , 500 ) , 1000 ) ,
+    ];
+
+    var tank = new Tank( images.get( 5 ) , 0.2 );
+    var cannon = new Cannon( Bomb , images.get( 6 ) , 0.5 , 500 , 5 , 1000  );
+
     tank.mount( cannon );
+
+    tank.on( 'hit' , function( targets ){
+        var npc;
+        while( ( npc = targets.pop() ) ){
+            if( ( npc = npc.owner ) && npc instanceof Npc ){
+                npc.die();
+            }
+        }
+    });
 
     tank.on( 'intersect' , function(){
         var location = this.animation.location;
         this.stop();
-        location.x -= this.dx;
-        location.y -= this.dy;
+        location.x -= this.lastDx;
+        location.y -= this.lastDy;
     });
-
-    target = new Animation( images.get( 1 ) , 400 , 200 );
 
     camera.on( 'mousedown' , function(){
         tank.start();
@@ -40,32 +53,23 @@ images.on( 'complete', function(){
         tank.cannon.fire();
     });
     
-    Frame.start();
-});
+    Frame.onloop = function(){
+        var mouse = camera.getMouse();
+        span.textContent = this.fps;
 
-Frame.onloop = function(){
-    var mouse = camera.getMouse();
-    span.textContent = this.fps;
+        if( mouse.state === Camera.MOUSE_STATE_DOWN && tank.state === Fx.STATE_RUN ){
+            tank.animation.lookAt( mouse.x , mouse.y );
+        }
 
-    if( mouse.state === Camera.MOUSE_STATE_DOWN && tank.state === Fx.STATE_RUN ){
-        tank.animation.lookAt( mouse.x , mouse.y );
+        tank.attach( scene );
+
+        for( var i = 0 ; i < npc.length ; i++ ){
+                npc[i].attach( scene );
+        }
+
+        scene.perform();
+        camera.shoot( scene );
     };
 
-    tank.attach( scene );
-    scene.add( target );
-    scene.perform();
-    camera.shoot( scene );
-};
-
-function test(){
-    for( i = 0; i < 200000; i++){ 
-        ball = new O( 0 , 0 , i%2 , images.get( 5 ) );
-        scene.add( ball );
-    }
-
-    var start = new Date().getTime();
-    camera.shoot( scene );
-    var end = new Date().getTime();
-
-    console.log( end - start );
-}
+    Frame.start();
+});
