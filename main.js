@@ -18,6 +18,16 @@ images.on( 'complete', function(){
         new Npc( new Animation( images.get( 5 ) , 300 , 300 ) , 1000 ) ,
         new Npc( new Animation( images.get( 5 ) , 400 , 100 ) , 2000 ) ,
         new Npc( new Animation( images.get( 5 ) , 700 , 500 ) , 1000 ) ,
+        new Npc( new Animation( images.get( 5 ) , 800 , 150 ) , 3000 ) ,
+        new Npc( new Animation( images.get( 5 ) , 900 , 50  ) , 4000 ) ,
+        new Npc( new Animation( images.get( 5 ) , 1000 , 300 ) , 1000 ) ,
+        new Npc( new Animation( images.get( 5 ) , 1100 , 100 ) , 2000 ) ,
+        new Npc( new Animation( images.get( 5 ) , 1200 , 500 ) , 1000 ) ,
+        new Npc( new Animation( images.get( 5 ) , 1300 , 150 ) , 3000 ) ,
+        new Npc( new Animation( images.get( 5 ) , 1500 , 50  ) , 4000 ) ,
+        new Npc( new Animation( images.get( 5 ) , 1500 , 300 ) , 1000 ) ,
+        new Npc( new Animation( images.get( 5 ) , 1600 , 100 ) , 2000 ) ,
+        new Npc( new Animation( images.get( 5 ) , 1700 , 500 ) , 1000 ) ,
     ];
 
     var tank = new Tank( images.get( 5 ) , 0.2 );
@@ -66,6 +76,7 @@ images.on( 'complete', function(){
             npc[i].attach( scene );
         }
 
+        camera.stick( tank.animation.location );
         scene.perform();
         camera.shoot( scene );
     };
