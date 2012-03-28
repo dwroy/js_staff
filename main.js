@@ -30,8 +30,8 @@ images.on( 'complete', function(){
         new Npc( new Animation( images.get( 5 ) , 1700 , 500 ) , 1000 ) ,
     ];
 
-    var tank = new Tank( images.get( 5 ) , 0.2 );
-    var cannon = new Cannon( Bomb , images.get( 6 ) , 0.5 , 500 , 5 , 1000  );
+    var tank = new Tank( images.get( 5 ) , 0.1 );
+    var cannon = new Cannon( Bomb , images.get( 6 ) , 1.5 , 5000 , 20 , 500  );
 
     tank.mount( cannon );
 
