@@ -13,11 +13,11 @@ images.on( 'complete', function(){
     var camera = new Camera( 0 , 0 , 960 , 640 , 3 , document.getElementById( 'canvas-frame' ) );
     var span = document.getElementById( 'fps-show' );
     var npc = [
-        new Npc( new Animation( images.get( 1 ) , 100 , 150 ) , 3000 ) ,
-        new Npc( new Animation( images.get( 1 ) , 200 , 50  ) , 4000 ) ,
-        new Npc( new Animation( images.get( 1 ) , 300 , 300 ) , 1000 ) ,
-        new Npc( new Animation( images.get( 1 ) , 400 , 100 ) , 2000 ) ,
-        new Npc( new Animation( images.get( 1 ) , 700 , 500 ) , 1000 ) ,
+        new Npc( new Animation( images.get( 5 ) , 100 , 150 ) , 3000 ) ,
+        new Npc( new Animation( images.get( 5 ) , 200 , 50  ) , 4000 ) ,
+        new Npc( new Animation( images.get( 5 ) , 300 , 300 ) , 1000 ) ,
+        new Npc( new Animation( images.get( 5 ) , 400 , 100 ) , 2000 ) ,
+        new Npc( new Animation( images.get( 5 ) , 700 , 500 ) , 1000 ) ,
     ];
 
     var tank = new Tank( images.get( 5 ) , 0.2 );
@@ -36,7 +36,6 @@ images.on( 'complete', function(){
 
     tank.on( 'intersect' , function(){
         var location = this.animation.location;
-        this.stop();
         location.x -= this.lastDx;
         location.y -= this.lastDy;
     });
@@ -64,7 +63,7 @@ images.on( 'complete', function(){
         tank.attach( scene );
 
         for( var i = 0 ; i < npc.length ; i++ ){
-                npc[i].attach( scene );
+            npc[i].attach( scene );
         }
 
         scene.perform();
