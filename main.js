@@ -19,6 +19,13 @@ images.on( 'complete', function(){
     cannon = new Cannon( Bomb , images.get( 6 ) , 0.5 , 500 , 5 , 1000  );
     tank.mount( cannon );
 
+    tank.on( 'intersect' , function(){
+        var location = this.animation.location;
+        this.stop();
+        location.x -= this.dx;
+        location.y -= this.dy;
+    });
+
     target = new Animation( images.get( 1 ) , 400 , 200 );
 
     camera.on( 'mousedown' , function(){
@@ -40,9 +47,9 @@ Frame.onloop = function(){
     var mouse = camera.getMouse();
     span.textContent = this.fps;
 
-    if( mouse.state === Camera.MOUSE_STATE_DOWN ){
+    if( mouse.state === Camera.MOUSE_STATE_DOWN && tank.state === Fx.STATE_RUN ){
         tank.animation.lookAt( mouse.x , mouse.y );
-    }
+    };
 
     tank.attach( scene );
     scene.add( target );
