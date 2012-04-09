@@ -1,18 +1,8 @@
 body {
+    height: 100%;
+    overflow: hidden;
+    background: #000;
     margin: 0px;
     padding: 0px;
-}
-
-#canvas-frame {
-    width: 960px;
-    height: 640px;
-    padding: 0px;
-    display: block;
-    margin: 10px auto 0px;
-    background-color: black;
-}
-
-#fps-show {
-    position: absolute;
 
 }

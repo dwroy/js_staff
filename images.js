@@ -1,5 +1,6 @@
 var images = new Source;
-(function(){
+window.on( 'load' , function(){
+
     var img;
 
     img = new Image;
@@ -57,4 +58,5 @@ var images = new Source;
     img.oy = 7;
     img.radius = 7;
     images.load( img );
-})();
+
+});
