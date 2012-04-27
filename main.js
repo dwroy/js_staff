@@ -13,13 +13,13 @@ window.on( 'load' , function(){
                 var camera = new Camera( 0 , 0 , 960 , 640 , 3 );
 
                 var npc = [
-                        new Npc( new Animation( images.get( 5 ) , 100 , 150 ) ,
+                        new Npc( images.get( 5 ) , 100 , 150 ,
                                 3000 ) ,
-                        new Npc( new Animation( images.get( 5 ) , 200 , 50 ) ,
+                        new Npc( images.get( 5 ) , 200 , 50 ,
                                 4000 ) ,
-                        new Npc( new Animation( images.get( 5 ) , 300 , 300 ) ,
+                        new Npc( images.get( 5 ) , 300 , 300 ,
                                 1000 ) ,
-                        new Npc( new Animation( images.get( 5 ) , 400 , 100 ) ,
+                        new Npc(  images.get( 5 ) , 400 , 100 ,
                                 2000 ) ,
                         new Npc( new Animation( images.get( 5 ) , 700 , 500 ) ,
                                 1000 ) ,
@@ -87,7 +87,7 @@ window.on( 'load' , function(){
                 } );
 
                 Frame.onloop = function(){
-                    var mouse = camera.getMouse();
+                    var mouse = camera.mouse;
 
                     if( mouse.state === Camera.MOUSE_STATE_DOWN
                             && tank.state === Fx.STATE_RUN ){
@@ -105,7 +105,6 @@ window.on( 'load' , function(){
                     camera.shoot( scene );
                 };
 
-                window.scrollTo( 0 , 0 , 1 );
                 Frame.start();
             } );
 } );
