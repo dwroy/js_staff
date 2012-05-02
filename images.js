@@ -3,7 +3,7 @@ window.on( 'load' , function(){
 
     var img;
 
-    img = new Image;
+    img = document.createElement( 'img' );
     img.name = 'ball';
     img.src = 'images/round.png';
     img.ox = 10;
@@ -11,7 +11,7 @@ window.on( 'load' , function(){
     img.radius = 5;
     images.load( img );
 
-    img = new Image;
+    img = document.createElement( 'img' );
     img.name = 'ball1';
     img.src = 'images/round1.png';
     img.ox = 20;
@@ -19,7 +19,7 @@ window.on( 'load' , function(){
     img.radius = 20;
     images.load( img );
 
-    img = new Image;
+    img = document.createElement( 'img' );
     img.name = 'ball2';
     img.src = 'images/round2.png';
     img.ox = 40;
@@ -27,7 +27,7 @@ window.on( 'load' , function(){
     img.radius = 40;
     images.load( img );
 
-    img = new Image;
+    img = document.createElement( 'img' );
     img.name = 'ball3';
     img.src = 'images/round3.png';
     img.ox = 15;
@@ -35,7 +35,7 @@ window.on( 'load' , function(){
     img.radius = 13;
     images.load( img );
 
-    img = new Image;
+    img = document.createElement( 'img' );
     img.name = 'bg';
     img.ox = 0;
     img.oy = 0;
@@ -43,7 +43,7 @@ window.on( 'load' , function(){
     img.src = 'images/map.png';
     images.load( img );
 
-    img = new Image;
+    img = document.createElement( 'img' );
     img.name = 'tank';
     img.src = 'images/tank.png';
     img.ox = 45;
@@ -51,7 +51,7 @@ window.on( 'load' , function(){
     img.radius = 30;
     images.load( img );
 
-    img = new Image;
+    img = document.createElement( 'img' );
     img.name = 'bomb';
     img.src = 'images/bomb.png';
     img.ox = 7;
