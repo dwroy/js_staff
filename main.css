@@ -1,8 +1,14 @@
 body {
     height: 100%;
     overflow: hidden;
-    background: #000;
     margin: 0px;
     padding: 0px;
 
+}
+
+#camera {
+    margin: 10px auto;
+    width: 960px;
+    height: 640px;
+    background: #000;
 }
