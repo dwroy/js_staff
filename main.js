@@ -75,6 +75,6 @@ window.on( 'load' , function(){
         };
 
         Frame.start();
-    } );
+    });
 
-} );
+});
