@@ -49,7 +49,10 @@ window.on( 'load' , function(){
     });
 
     images.on( 'complete' , function(){
-        var vehicle = new Vehicle( images.get( 5 ) , 0.1 , 10 );
+        var vehicle = new Vehicle( images.get( 5 ) , 0.1 , 10 ),
+            npc = new Vehicle( images.get( 5 ) , 0.2 , 10 );
+
+        npc.setPosition( 200 , 300 );
 
 
         camera.on( 'mousedown' , function(){
@@ -58,10 +61,15 @@ window.on( 'load' , function(){
 
         camera.on( 'mousemove' , function(){
             if( vehicle.isRunning() ) vehicle.face( Mouse.x , Mouse.y );
+            npc.face( Mouse.x , Mouse.y );
         });
 
         camera.on( 'mouseup' , function(){
             vehicle.stop();
+        });
+
+        vehicle.on( 'hit' , function( intersectors ){
+            console.log( intersectors );
         });
 
         Frame.onloop = function(){
@@ -69,6 +77,7 @@ window.on( 'load' , function(){
             camera.emit( 'mousemove' );
 
             vehicle.signin( scene );
+            npc.signin( scene );
 
             scene.perform();
             camera.shoot( scene );
