@@ -65,13 +65,13 @@ window.on( 'load' , function(){
                     location.y -= this.lastDy;
                 } );
 
-                /**
-                 * camera.on( 'mousedown' , function(){ tank.start(); });
-                 * 
-                 * camera.on( 'mouseup' , function(){ tank.stop(); });
-                 * 
-                 * camera.on( 'keydown' , function(){ tank.cannon.fire(); });
-                 */
+/*
+                  camera.on( 'mousedown' , function(){ tank.start(); });
+                  
+                  camera.on( 'mouseup' , function(){ tank.stop(); });
+                  
+                  camera.on( 'keydown' , function(){ tank.cannon.fire(); });
+		*/
 
                 camera.addEvent( 'touchstart' , function( e ){
                     var touches = e.targetTouches;
@@ -100,7 +100,7 @@ window.on( 'load' , function(){
                         npc[ i ].attach( scene );
                     }
 
-                    camera.stick( tank.animation.location );
+                    camera.follow( tank.animation.location );
                     scene.perform();
                     camera.shoot( scene );
                 };
